@@ -1,4 +1,6 @@
 import java.io.*;
+import com.google.gson.Gson;
+
 
 public class Configuration {
     private int total_No_Tickets;
@@ -58,6 +60,34 @@ public class Configuration {
             writer.write("Enter the Maximum Capacity of Tickets " + maximum_Ticket_Capacity + "\n");
         } catch (IOException e) {
             System.out.println("Error saving configuration to text file: ");
+        }
+    }
+
+    // Saving Configuration data to a JSON File
+    public void saveToJson(String filePath) {
+        //Creating GSON Object imported GSON
+        Gson gson = new Gson();
+        try (FileWriter writer = new FileWriter(filePath)) {
+            //Converting Configuration Object to JSON and Save
+            gson.toJson(this, writer);
+            System.out.println("Configuration saved to " + filePath);
+        } catch (IOException e) {
+            System.out.println("Error saving configuration to JSON file.");
+            e.printStackTrace();
+        }
+    }
+
+    // Load past Configured data from JSON File
+    public static Configuration loadConfiguration(String filePath) {
+        //Creating GSON Object imported GSON
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader(filePath)) {
+            // Deserializing serialised to a object
+            return gson.fromJson(reader, Configuration.class);
+        } catch (IOException e) {
+            System.out.println("Error loading configuration from JSON file.");
+            e.printStackTrace();
+            return null;
         }
     }
 }
