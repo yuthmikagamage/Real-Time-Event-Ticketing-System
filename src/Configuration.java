@@ -70,7 +70,6 @@ public class Configuration {
         try (FileWriter writer = new FileWriter(filePath)) {
             //Converting Configuration Object to JSON and Save
             gson.toJson(this, writer);
-            System.out.println("Configuration saved to " + filePath);
         } catch (IOException e) {
             System.out.println("Error saving configuration to JSON file.");
             e.printStackTrace();
@@ -84,8 +83,12 @@ public class Configuration {
         try (FileReader reader = new FileReader(filePath)) {
             // Deserializing serialised to a object
             return gson.fromJson(reader, Configuration.class);
+        } catch (FileNotFoundException e) {
+            // Printing message if file not found
+            System.out.println("Configuration file is not available" );
+            return null;
         } catch (IOException e) {
-            System.out.println("Error loading configuration from JSON file.");
+            System.out.println("Error loading configuration from JSON file");
             e.printStackTrace();
             return null;
         }
