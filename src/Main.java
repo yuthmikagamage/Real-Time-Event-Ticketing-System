@@ -49,7 +49,7 @@ public class Main {
 
     // Method to get configuration input from user when user choose configure settings
     public static void UserInputConfigurations(){
-        //Getting Correct Inputs by Calling the method
+        //Getting Correct Inputs by Calling the validation method
         int total_No_Tickets = getCorrectInputs("Enter the Total Number of Tickets : ");
         int ticket_Release_Rate = getCorrectInputs("Enter the Release Rate of Tickets : ");
         int customer_Retreival_rate = getCorrectInputs("Enter the Customer Retrieval rate of Tickets : ");
@@ -155,6 +155,7 @@ public class Main {
             UserInputConfigurations();
         }
 
+        //
         if (newConfigurationObject != null) {
             System.out.println("------------------------------------------------------");;
             System.out.println("--         Configuration Load Successfully          --");
