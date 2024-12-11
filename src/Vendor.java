@@ -16,7 +16,7 @@ public class Vendor implements Runnable {
         int Release_Rate = configuration.getTicket_Release_Rate();
         int i=1;
         boolean StopThread = false;
-        while (!StopThread){
+        while (!StopThread) {
             while(i<=Total_Tickets){
                 try{
                     ticketPool.addTicket(i);

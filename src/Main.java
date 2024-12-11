@@ -104,7 +104,7 @@ public class Main {
         //Second vendors' Thread
         Thread SecondVendorThread = new Thread(newvendor2);
 
-        //Starting thereading
+        //Starting Threads
         VendorThread.start();
         SecondVendorThread.start();
         CustomerThread.start();
