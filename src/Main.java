@@ -1,3 +1,4 @@
+import java.beans.Customizer;
 import java.util.*;
 public class Main {
     //User Choise as a Number
@@ -9,8 +10,8 @@ public class Main {
             System.out.println("------------------------------------------------------");
             System.out.println("--                      Menu                        --");
             System.out.println("------------------------------------------------------");
-            System.out.println("1) Enter Configurations and Continue ");
-            System.out.println("2) Load Existing Configurations and Continue ");
+            System.out.println("1) Start New Event  and Continue");
+            System.out.println("2) Load Configurations and Continue ");
             System.out.println("------------------------------------------------------");
             System.out.println();
             boolean choose_excep=false;
@@ -94,20 +95,20 @@ public class Main {
         //Customer Thread
         Thread CustomerThread = new Thread(newCustomer);
 
-//        Customer newCustomer2 = new Customer(Ticket_Object,Configuration_Object);
-//        //Customer Thread
-//        Thread SecondCustomerThread = new Thread(newCustomer2);
+        Customer newCustomer2 = new Customer(Ticket_Object,Configuration_Object);
+        //Customer Thread
+        Thread SecondCustomerThread = new Thread(newCustomer2);
 
-        // Creating second object with Vendor class as second vendor
-//        Vendor newvendor2 = new Vendor(Configuration_Object,Ticket_Object);
-//        //Second vendors' Thread
-//        Thread SecondVendorThread = new Thread(newvendor2);
+        //Creating second object with Vendor class as second vendor
+        Vendor newvendor2 = new Vendor(Configuration_Object,Ticket_Object);
+        //Second vendors' Thread
+        Thread SecondVendorThread = new Thread(newvendor2);
 
         //Starting thereading
         VendorThread.start();
-        //SecondVendorThread.start();
+        SecondVendorThread.start();
         CustomerThread.start();
-        //SecondCustomerThread.start();
+        SecondCustomerThread.start();
 
         //System.out.println("After retreiving available tickets are : " + object.getTotal_No_Tickets());
     }
@@ -166,10 +167,12 @@ public class Main {
             System.out.println();
             // Getting Customers input how many tickets need to buy
             int Customer_Ticket = getCorrectInputs("Enter the ticket capacity you want to buy : ");
+            System.out.println();
             //Checking the Customer Ticket Count is Less than Or Equal Total Number of Tickets
             while (Customer_Ticket>Loaded_Total_Ticket) {
                 System.out.println("Customer ticket capacity cannot be higher than total no of tickets!");
                 Customer_Ticket = getCorrectInputs("Enter the ticket capacity you want to buy : ");
+                System.out.println();
             }
 
             // Setting the loaded values and again and setting the inputted customer ticket count
@@ -184,20 +187,27 @@ public class Main {
 
             //Creating object with Vendor Class
             Vendor newvendor = new Vendor(Configuration_Object,Ticket_Object);
-            //Vendor Thread
+            //First Vendor Thread
             Thread VendorThread = new Thread(newvendor);
+
+            Vendor newvendor2 = new Vendor(Configuration_Object,Ticket_Object);
+            //Second Vendors Thread
+            Thread SecondVendorThread = new Thread(newvendor2);
 
             //Creating object with Customer Class
             Customer newCustomer = new Customer(Ticket_Object,Configuration_Object);
-            //Customer Thread
+            //First Customer Thread
             Thread CustomerThread = new Thread(newCustomer);
 
-            VendorThread.start();
-            // SecondVendorThread.start();
-            CustomerThread.start();
+            Customer secondCustomer= new Customer(Ticket_Object,Configuration_Object);
+            //Second Customers Thread
+            Thread SecondCustomerThread = new Thread(secondCustomer);
 
-        } else {
-            System.out.println("Failed to load configuration details from JSON");
+            //Starting Customer Threads and Vendor Threads
+            VendorThread.start();
+            SecondVendorThread.start();
+            CustomerThread.start();
+            SecondCustomerThread.start();
         }
     }
 }

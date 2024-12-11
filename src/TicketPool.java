@@ -3,7 +3,6 @@ import java.util.*;
 public class TicketPool {
 
     private List<String> ticketList;
-
     private Configuration configuration;
 
     public TicketPool(Configuration configuration){
@@ -14,15 +13,19 @@ public class TicketPool {
     public synchronized void addTicket(int ticket){
         int capacityOFTicketPool = configuration.getMaximum_Ticket_Capacity();
         try{
+            String threadName = Thread.currentThread().getName();
+            String VendorID = threadName.replaceAll("\\D", "");
             while (ticketList.size() >= capacityOFTicketPool) {
-                System.out.println("Pool is full and Vendor is Waiting to Add Tickets! Vendor ID- " + Thread.currentThread().getName());
+                System.out.println("Pool is full and Vendor " + VendorID +" is Waiting to Add Tickets! ");
                 wait();
             }
-            ticketList.add(String.valueOf(ticket));
-            System.out.println("Ticket added successfully " + ticket);
-            configuration.setTotal_No_Tickets(configuration.getTotal_No_Tickets()-1);
-            System.out.println(configuration.getTotal_No_Tickets());
-            notifyAll();
+            if (configuration.getTotal_No_Tickets()>0){
+                ticketList.add(String.valueOf(ticket));
+                configuration.setTotal_No_Tickets(configuration.getTotal_No_Tickets()-1);
+                System.out.println("Vendor ID - " + VendorID + " | Successfully Added Ticket! Remaining Total Tickets = " + configuration.getTotal_No_Tickets());
+                notifyAll();
+            }
+
         } catch (Exception e) {
             System.out.println("Error");
         }
@@ -35,7 +38,10 @@ public class TicketPool {
                 System.out.println("No tickets available. Customer is waiting!");
             }
             ticketList.removeFirst();
-            System.out.println("Ticket purchased by customer");
+            //Getting the name of the thread and removing white spacing and displaying the thread number
+            String threadName = Thread.currentThread().getName();
+            String customerId = threadName.replaceAll("\\D", "");
+            System.out.println("Ticket purchased by Customer - " + customerId);
             notifyAll();
         }catch (InterruptedException e){
             System.out.println("Error");
