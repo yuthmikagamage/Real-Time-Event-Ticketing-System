@@ -55,9 +55,10 @@ public class Configuration {
     public void TextFileSaving(String filePath) {
         try (FileWriter writer = new FileWriter(filePath))  {
             writer.write("Total Number of Tickets " + total_No_Tickets + "\n");
-            writer.write("Enter the Release Rate of Tickets " + ticket_Release_Rate + "\n");
-            writer.write("Enter the Customer Retrieval rate of Tickets " + customer_Retreival_rate + "\n");
-            writer.write("Enter the Maximum Capacity of Tickets " + maximum_Ticket_Capacity + "\n");
+            writer.write("Release Rate of Tickets " + ticket_Release_Rate + "\n");
+            writer.write("Customer Retrieval rate of Tickets " + customer_Retreival_rate + "\n");
+            writer.write("Maximum Capacity of Tickets " + maximum_Ticket_Capacity + "\n");
+            writer.write("Customer Entered Ticket Quantity " + Customer_Ticket);
         } catch (IOException e) {
             System.out.println("Error saving configuration to text file: ");
         }

@@ -77,30 +77,31 @@ public class Main {
         Configuration_Object.setMaximum_Ticket_Capacity(maximum_Ticket_Capacity);
         Configuration_Object.setCustomer_Ticket(Customer_Ticket);
 
-        //Save Configuration Object to JSON File
-        Configuration_Object.saveToJson("config.json");
+        //Saving Inputted data to Text File
+        Configuration_Object.TextFileSaving("w2053137_TicketData.txt");
 
+        //Save Configuration Object to JSON File
+        Configuration_Object.saveToJson("w2053137_JsonFile.json");
 
         //Creating object with TicketPool Class
         TicketPool Ticket_Object = new TicketPool(Configuration_Object);
 
         //Creating object with Vendor Class
-        Vendor newvendor = new Vendor(Configuration_Object,Ticket_Object);
+        Vendor newvendor = new Vendor(Configuration_Object,Ticket_Object,1);
         //Vendor Thread
         Thread VendorThread = new Thread(newvendor);
 
-
         //Creating object with Customer Class
-        Customer newCustomer = new Customer(Ticket_Object,Configuration_Object);
+        Customer newCustomer = new Customer(Ticket_Object,Configuration_Object,1);
         //Customer Thread
         Thread CustomerThread = new Thread(newCustomer);
 
-        Customer newCustomer2 = new Customer(Ticket_Object,Configuration_Object);
+        Customer newCustomer2 = new Customer(Ticket_Object,Configuration_Object,2);
         //Customer Thread
         Thread SecondCustomerThread = new Thread(newCustomer2);
 
         //Creating second object with Vendor class as second vendor
-        Vendor newvendor2 = new Vendor(Configuration_Object,Ticket_Object);
+        Vendor newvendor2 = new Vendor(Configuration_Object,Ticket_Object,2);
         //Second vendors' Thread
         Thread SecondVendorThread = new Thread(newvendor2);
 
@@ -140,7 +141,7 @@ public class Main {
         // Creating object with Configuration Class
         Configuration Configuration_Object = new Configuration();
         // Loading the configurations using load method
-        Configuration newConfigurationObject = Configuration_Object.loadConfiguration("config.json");
+        Configuration newConfigurationObject = Configuration_Object.loadConfiguration("w2053137_JsonFile.json");
         int  Loaded_Total_Ticket=0; int Loaded_Ticket_Release_Rate=0;int Loaded_Customer_Retreival_Rate=0;int Loaded_Maximum_Ticket=0;
 
         try {
@@ -182,25 +183,26 @@ public class Main {
             Configuration_Object.setCustomer_Retreival_rate(Loaded_Customer_Retreival_Rate);
             Configuration_Object.setMaximum_Ticket_Capacity(Loaded_Maximum_Ticket);
             Configuration_Object.setCustomer_Ticket(Customer_Ticket);
+            Configuration_Object.TextFileSaving("w2053137_TicketData.txt");
 
             //Creating object with TicketPool Class
             TicketPool Ticket_Object = new TicketPool(Configuration_Object);
 
             //Creating object with Vendor Class
-            Vendor newvendor = new Vendor(Configuration_Object,Ticket_Object);
+            Vendor newvendor = new Vendor(Configuration_Object,Ticket_Object,1);
             //First Vendor Thread
             Thread VendorThread = new Thread(newvendor);
 
-            Vendor newvendor2 = new Vendor(Configuration_Object,Ticket_Object);
+            Vendor newvendor2 = new Vendor(Configuration_Object,Ticket_Object,2);
             //Second Vendors Thread
             Thread SecondVendorThread = new Thread(newvendor2);
 
             //Creating object with Customer Class
-            Customer newCustomer = new Customer(Ticket_Object,Configuration_Object);
+            Customer newCustomer = new Customer(Ticket_Object,Configuration_Object,1);
             //First Customer Thread
             Thread CustomerThread = new Thread(newCustomer);
 
-            Customer secondCustomer= new Customer(Ticket_Object,Configuration_Object);
+            Customer secondCustomer= new Customer(Ticket_Object,Configuration_Object,2);
             //Second Customers Thread
             Thread SecondCustomerThread = new Thread(secondCustomer);
 

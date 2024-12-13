@@ -4,10 +4,12 @@ public class Customer implements Runnable{
 
     private TicketPool ticketPool;
     private Configuration configuration;
+    private int CustomerID;
 
-    public Customer(TicketPool ticketPool,Configuration configuration){
+    public Customer(TicketPool ticketPool,Configuration configuration, int CustomerID){
         this.configuration=configuration;
         this.ticketPool=ticketPool;
+        this.CustomerID = CustomerID;
     }
 
     @Override
@@ -17,7 +19,7 @@ public class Customer implements Runnable{
         try {
             int i=1;
             while(i<=CustomerTicketCount) {
-                ticketPool.retreiveTicket();
+                ticketPool.retreiveTicket(CustomerID);
                 Thread.sleep(CustomerRetreivalRate);
                 i++;
             }

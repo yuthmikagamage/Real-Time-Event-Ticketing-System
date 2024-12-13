@@ -10,12 +10,9 @@ public class TicketPool {
         this.ticketList = new ArrayList<>();
     }
 
-    public synchronized void addTicket(int ticket){
+    public synchronized void addTicket(int ticket , int VendorID){
         int capacityOFTicketPool = configuration.getMaximum_Ticket_Capacity();
         try{
-            //Getting the name of the thread and displaying the thread number as ID
-            String threadName = Thread.currentThread().getName();
-            String VendorID = threadName.replaceAll("\\D", "");
             while (ticketList.size() >= capacityOFTicketPool) {
                 System.out.println("Pool is full and Vendor " + VendorID +" is Waiting to Add Tickets! ");
                 wait();
@@ -32,17 +29,14 @@ public class TicketPool {
         }
     }
 
-    public synchronized void retreiveTicket(){
+    public synchronized void retreiveTicket(int CustID){
         try {
             while (ticketList.size() <= 0) {
                 wait();
                 System.out.println("No tickets available. Customer is waiting!");
             }
             ticketList.removeFirst();
-            //Getting the name of the thread and displaying the thread number as ID
-            String threadName = Thread.currentThread().getName();
-            String customerId = threadName.replaceAll("\\D", "");
-            System.out.println("Ticket purchased by Customer - " + customerId);
+            System.out.println("Ticket purchased by Customer - " + CustID);
             notifyAll();
         }catch (InterruptedException e){
             System.out.println("Error");

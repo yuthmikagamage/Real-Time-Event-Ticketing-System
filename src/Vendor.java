@@ -4,10 +4,12 @@ public class Vendor implements Runnable {
 
     private TicketPool ticketPool;
     private Configuration configuration;
+    private int VendorID;
 
-    public Vendor(Configuration configuration, TicketPool ticketPool){
+    public Vendor(Configuration configuration, TicketPool ticketPool, int VendorID){
         this.ticketPool=ticketPool;
         this.configuration=configuration;
+        this.VendorID=VendorID;
     }
 
     @Override
@@ -19,7 +21,7 @@ public class Vendor implements Runnable {
         while (!StopThread) {
             while(i<=Total_Tickets){
                 try{
-                    ticketPool.addTicket(i);
+                    ticketPool.addTicket(i,VendorID);
                     i++;
                     Thread.sleep(Release_Rate);
                     if (configuration.getTotal_No_Tickets()==0){
